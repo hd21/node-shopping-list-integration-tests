@@ -164,19 +164,20 @@ describe('Recipes', function() {
                 const expectedKeys = ['name', 'ingredients', 'id'];
                 res.body.forEach(function(item) {
                     item.should.be.a('object');
-                    item.should.include.keys(exepctedKeys);
+                    item.should.include.keys(expectedKeys);
                 });
             });
     });
 
 
     it('should update recipe on PUT', function() {
-        const updateData = Recipes.update({
-            id: req.params.id,
-            name: req.body.name,
-            ingredients: req.body.ingredients
-        });
-        res.json(updatedItem);
+        const updateData = {
+            name: 'fruit salad',
+            ingredients: ['pineapple', 'strawberries',
+                'mango', 'kiwi', 'blueberries'
+            ]
+        };
+
 
         return chai.request(app)
             .get('/recipes')
@@ -196,8 +197,8 @@ describe('Recipes', function() {
 
     it('should add new recipe on POST', function() {
         const newRecipe = {
-            name: req.body.name,
-            ingredients: req.body.ingredients
+            name: 'latte',
+            ingredients: ['espresso', 'milk']
         };
 
         return chai.request(app)
@@ -209,7 +210,7 @@ describe('Recipes', function() {
                 res.body.should.be.a('object');
                 res.body.should.include.keys('name', 'ingredients', 'id');
                 res.body.id.should.not.be.null;
-                res.body.should.deep.equal(Object.assign(newRecipe, { id: res.body / id }));
+                res.body.should.deep.equal(Object.assign(newRecipe, { id: res.body.id }));
             });
     });
 
@@ -223,6 +224,7 @@ describe('Recipes', function() {
             .then(function(res) {
                 res.should.have.status(204);
             });
+
     });
 
 });
