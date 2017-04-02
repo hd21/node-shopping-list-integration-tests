@@ -210,6 +210,8 @@ describe('Recipes', function() {
                 res.body.should.be.a('object');
                 res.body.should.include.keys('name', 'ingredients', 'id');
                 res.body.id.should.not.be.null;
+                res.body.name.should.equal(newRecipe.name);
+                res.body.ingredients.should.be.a('array');
                 res.body.should.deep.equal(Object.assign(newRecipe, { id: res.body.id }));
             });
     });
